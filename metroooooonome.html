@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>Metroooooonome</title>
+
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"
+/>
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+:root{
+  --bg:#f8f7f4;
+  --text:#1a1a1a;
+  --sub:#666;
+  --card:#fff;
+  --border:rgba(0,0,0,0.12);
+  --btn-bg:#fff;
+  --btn-hover:#f0ede8;
+  --accent:#1a1a1a;
+  --pulse-off:#ddd;
+}
+
+body{
+  font-family:
+    Inter,
+    system-ui,
+    sans-serif;
+
+  background:var(--bg);
+  color:var(--text);
+
+  min-height:100vh;
+}
+
+body.dark{
+  --bg:#141414;
+  --text:#f0f0f0;
+  --sub:#999;
+  --card:#1e1e1e;
+  --border:rgba(255,255,255,0.1);
+  --btn-bg:#252525;
+  --btn-hover:#2e2e2e;
+  --accent:#f0f0f0;
+  --pulse-off:#333;
+}
+
+#app{
+  max-width:700px;
+  margin:auto;
+  padding:0 0 3rem;
+}
+
+/* TOP */
+
+.topbar{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  position:relative;
+
+  padding:1.5rem 1.5rem 0;
+}
+
+.app-title{
+  font-size:28px;
+  font-weight:600;
+}
+
+#theme-btn{
+  position:absolute;
+  right:1.5rem;
+  top:1.5rem;
+
+  width:42px;
+  height:42px;
+
+  border-radius:50%;
+  border:1px solid var(--border);
+
+  background:var(--btn-bg);
+  color:var(--text);
+
+  cursor:pointer;
+
+  font-size:18px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  transition:0.2s;
+}
+
+#theme-btn:hover{
+  background:var(--btn-hover);
+}
+
+/* DOTS */
+
+.beat-dots{
+  display:flex;
+  justify-content:center;
+  gap:12px;
+
+  margin-top:2rem;
+}
+
+.dot{
+  width:14px;
+  height:14px;
+
+  border-radius:50%;
+
+  background:var(--pulse-off);
+
+  transition:0.05s;
+}
+
+.dot.active-1{
+  background:#e05a2b;
+}
+
+.dot.active-other{
+  background:#5b8fd4;
+}
+
+/* BPM */
+
+.bpm-section{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  gap:14px;
+
+  margin-top:1rem;
+}
+
+.jump-col{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.jump-btn{
+  width:72px;
+
+  padding:8px 0;
+
+  border-radius:10px;
+  border:1px solid var(--border);
+
+  background:var(--btn-bg);
+  color:var(--text);
+
+  cursor:pointer;
+
+  font-weight:600;
+
+  transition:0.15s;
+}
+
+.jump-btn:hover{
+  background:var(--btn-hover);
+}
+
+.scroll-wheel-wrap{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+
+  user-select:none;
+  cursor:ns-resize;
+}
+
+.bpm-display{
+  font-size:96px;
+  font-weight:600;
+  line-height:1;
+
+  min-width:220px;
+
+  text-align:center;
+
+  transition:0.08s;
+}
+
+.bpm-display.bump{
+  transform:scale(1.06);
+}
+
+.bpm-label{
+  margin-top:6px;
+
+  font-size:13px;
+  color:var(--sub);
+
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+}
+
+.scroll-hint{
+  margin-top:8px;
+
+  font-size:12px;
+  color:var(--sub);
+}
+
+/* PLAY */
+
+.play-wrap{
+  display:flex;
+  justify-content:center;
+
+  margin-top:1.5rem;
+}
+
+.play-btn{
+  width:76px;
+  height:76px;
+
+  border-radius:50%;
+
+  border:1px solid var(--border);
+
+  background:var(--btn-bg);
+  color:var(--text);
+
+  font-size:30px;
+
+  cursor:pointer;
+
+  transition:0.15s;
+}
+
+.play-btn:hover{
+  background:var(--btn-hover);
+}
+
+.play-btn.playing{
+  background:var(--accent);
+  color:var(--bg);
+}
+
+/* TIME SIG */
+
+.time-sig{
+  display:flex;
+  justify-content:center;
+  gap:8px;
+
+  margin-top:1.5rem;
+}
+
+.sig-btn{
+  padding:7px 16px;
+
+  border-radius:8px;
+  border:1px solid var(--border);
+
+  background:var(--btn-bg);
+  color:var(--text);
+
+  cursor:pointer;
+}
+
+.sig-btn.active{
+  background:var(--accent);
+  color:var(--bg);
+
+  border-color:transparent;
+}
+
+.divider{
+  margin:2rem 1.5rem 0;
+
+  border:none;
+  border-top:1px solid var(--border);
+}
+
+/* RAMP */
+
+.ramp-section{
+  padding:1.5rem;
+}
+
+.ramp-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.ramp-title{
+  font-size:16px;
+  font-weight:600;
+}
+
+.toggle-ramp{
+  padding:6px 12px;
+
+  border-radius:8px;
+  border:1px solid var(--border);
+
+  background:var(--btn-bg);
+  color:var(--text);
+
+  cursor:pointer;
+}
+
+.toggle-ramp:hover{
+  background:var(--btn-hover);
+}
+
+.ramp-body{
+  display:none;
+  margin-top:1rem;
+}
+
+.ramp-body.open{
+  display:block;
+}
+
+.ramp-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+
+  margin-bottom:1rem;
+}
+
+.ramp-field label{
+  display:block;
+
+  margin-bottom:6px;
+
+  font-size:12px;
+  color:var(--sub);
+}
+
+.ramp-field input{
+  width:100%;
+
+  padding:10px;
+
+  border-radius:10px;
+  border:1px solid var(--border);
+
+  background:var(--card);
+  color:var(--text);
+
+  font-size:15px;
+}
+
+.ramp-preview{
+  margin-bottom:1rem;
+
+  padding:12px 14px;
+
+  border-radius:10px;
+  border:1px solid var(--border);
+
+  background:var(--card);
+
+  color:var(--sub);
+
+  line-height:1.6;
+  font-size:14px;
+}
+
+.ramp-start-btn{
+  width:100%;
+
+  padding:14px;
+
+  border-radius:12px;
+  border:none;
+
+  background:#1a1a1a;
+  color:#fff;
+
+  font-size:15px;
+  font-weight:600;
+
+  cursor:pointer;
+
+  transition:0.15s;
+}
+
+.ramp-start-btn:hover{
+  opacity:0.9;
+}
+
+.ramp-start-btn.active-ramp{
+  background:#c0392b;
+}
+
+.ramp-status{
+  margin-top:12px;
+
+  text-align:center;
+
+  color:var(--sub);
+
+  font-size:13px;
+
+  min-height:20px;
+}
+
+/* COUNTDOWN */
+
+.countdown-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+
+  margin-bottom:1rem;
+
+  padding:12px 14px;
+
+  border-radius:10px;
+  border:1px solid var(--border);
+
+  background:var(--card);
+}
+
+.countdown-row label{
+  flex:1;
+  font-size:13px;
+  color:var(--sub);
+}
+
+.countdown-toggle{
+  width:40px;
+  height:22px;
+
+  border:none;
+  border-radius:999px;
+
+  background:var(--pulse-off);
+
+  cursor:pointer;
+
+  position:relative;
+}
+
+.countdown-toggle::after{
+  content:'';
+
+  position:absolute;
+  top:3px;
+  left:3px;
+
+  width:16px;
+  height:16px;
+
+  border-radius:50%;
+
+  background:#fff;
+
+  transition:0.2s;
+}
+
+.countdown-toggle.on{
+  background:#5b8fd4;
+}
+
+.countdown-toggle.on::after{
+  transform:translateX(18px);
+}
+
+.countdown-sec-wrap{
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+
+.countdown-sec-wrap input{
+  width:56px;
+
+  padding:6px 8px;
+
+  border-radius:8px;
+  border:1px solid var(--border);
+
+  background:var(--card);
+  color:var(--text);
+
+  text-align:center;
+}
+
+/* OVERLAY */
+
+#countdown-overlay{
+  position:fixed;
+  inset:0;
+
+  display:none;
+
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+
+  background:rgba(0,0,0,0.7);
+
+  z-index:999;
+}
+
+#countdown-overlay.visible{
+  display:flex;
+}
+
+.cd-number{
+  font-size:120px;
+  font-weight:700;
+
+  color:#fff;
+}
+
+.cd-label{
+  color:rgba(255,255,255,0.7);
+}
+
+.cd-cancel{
+  margin-top:16px;
+
+  padding:10px 18px;
+
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,0.25);
+
+  background:none;
+  color:#fff;
+
+  cursor:pointer;
+}
+
+</style>
+</head>
+<body>
+
+<div id="app">
+
+  <div class="topbar">
+    <div class="app-title">Metroooooonome</div>
+
+    <button id="theme-btn">
+      <i class="ti ti-moon"></i>
+    </button>
+  </div>
+
+  <div class="beat-dots" id="beat-dots"></div>
+
+  <div class="bpm-section">
+
+    <div class="jump-col">
+      <button class="jump-btn" data-delta="-20">− 20</button>
+      <button class="jump-btn" data-delta="-5">− 5</button>
+      <button class="jump-btn" data-delta="-1">− 1</button>
+    </div>
+
+    <div class="scroll-wheel-wrap" id="scroll-wheel">
+      <div class="bpm-display" id="bpm-display">120</div>
+
+      <div class="bpm-label">BPM</div>
+
+      <div class="scroll-hint">
+        <i class="ti ti-arrows-vertical"></i>
+        scroll / drag
+      </div>
+    </div>
+
+    <div class="jump-col">
+      <button class="jump-btn" data-delta="20">+ 20</button>
+      <button class="jump-btn" data-delta="5">+ 5</button>
+      <button class="jump-btn" data-delta="1">+ 1</button>
+    </div>
+
+  </div>
+
+  <div class="play-wrap">
+    <button class="play-btn" id="play-btn">
+      <i class="ti ti-player-play" id="play-icon"></i>
+    </button>
+  </div>
+
+  <div class="time-sig">
+
+    <button class="sig-btn" data-beats="2">2/4</button>
+
+    <button class="sig-btn active" data-beats="4">
+      4/4
+    </button>
+
+    <button class="sig-btn" data-beats="3">3/4</button>
+
+    <button class="sig-btn" data-beats="6">6/8</button>
+
+  </div>
+
+  <hr class="divider">
+
+  <div class="ramp-section">
+
+    <div class="ramp-header">
+
+      <div class="ramp-title">
+        Practice ramp
+      </div>
+
+      <button class="toggle-ramp" id="toggle-ramp">
+        Configure ▾
+      </button>
+
+    </div>
+
+    <div class="ramp-body" id="ramp-body">
+
+      <div class="ramp-grid">
+
+        <div class="ramp-field">
+          <label>Start BPM</label>
+          <input type="number" id="r-start" value="60">
+        </div>
+
+        <div class="ramp-field">
+          <label>End BPM</label>
+          <input type="number" id="r-end" value="120">
+        </div>
+
+        <div class="ramp-field">
+          <label>Repeats per step</label>
+          <input type="number" id="r-reps" value="4">
+        </div>
+
+        <div class="ramp-field">
+          <label>Increase by</label>
+          <input type="number" id="r-step" value="5">
+        </div>
+
+      </div>
+
+      <div class="countdown-row">
+
+        <label>
+          Countdown before start
+        </label>
+
+        <div class="countdown-sec-wrap">
+          <input
+            type="number"
+            id="cd-secs"
+            value="5"
+            disabled
+          >
+
+          <span>sec</span>
+        </div>
+
+        <button
+          class="countdown-toggle"
+          id="cd-toggle"
+        ></button>
+
+      </div>
+
+      <div class="ramp-preview" id="ramp-preview">
+        —
+      </div>
+
+      <button
+        class="ramp-start-btn"
+        id="ramp-start-btn"
+      >
+        Start ramp
+      </button>
+
+      <div class="ramp-status" id="ramp-status"></div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<div id="countdown-overlay">
+
+  <div class="cd-number" id="cd-number">
+    5
+  </div>
+
+  <div class="cd-label">
+    get ready…
+  </div>
+
+  <button class="cd-cancel" id="cd-cancel">
+    Cancel
+  </button>
+
+</div>
+
+<script>
+
+(() => {
+
+const state = {
+  bpm:120,
+  playing:false,
+  beatsPerMeasure:4,
+  currentBeat:0,
+  interval:null,
+
+  ramp:{
+    active:false,
+    bpm:60,
+    repeats:0
+  },
+
+  countdown:false
+};
+
+const $ = id => document.getElementById(id);
+
+const ui = {
+  bpm: $('bpm-display'),
+  playBtn: $('play-btn'),
+  playIcon: $('play-icon'),
+  beatDots: $('beat-dots'),
+  rampBody: $('ramp-body'),
+  toggleRamp: $('toggle-ramp'),
+  rampBtn: $('ramp-start-btn'),
+  rampStatus: $('ramp-status'),
+  rampPreview: $('ramp-preview'),
+  cdToggle: $('cd-toggle'),
+  cdSecs: $('cd-secs'),
+  cdOverlay: $('countdown-overlay'),
+  cdNumber: $('cd-number'),
+  cdCancel: $('cd-cancel'),
+  themeBtn: $('theme-btn')
+};
+
+const AudioContextClass =
+  window.AudioContext ||
+  window.webkitAudioContext;
+
+let actx;
+
+function ctx(){
+  if(!actx){
+    actx = new AudioContextClass();
+  }
+  return actx;
+}
+
+function click(freq,gain,dur){
+
+  const c = ctx();
+
+  const osc = c.createOscillator();
+  const g = c.createGain();
+
+  osc.connect(g);
+  g.connect(c.destination);
+
+  osc.frequency.value = freq;
+
+  g.gain.setValueAtTime(
+    gain,
+    c.currentTime
+  );
+
+  g.gain.exponentialRampToValueAtTime(
+    0.001,
+    c.currentTime + dur
+  );
+
+  osc.start();
+  osc.stop(c.currentTime + dur);
+}
+
+function playBeat(accent){
+  click(
+    accent ? 1050 : 820,
+    accent ? 0.6 : 0.35,
+    0.08
+  );
+}
+
+function buildDots(){
+
+  ui.beatDots.innerHTML = '';
+
+  for(let i=0;i<state.beatsPerMeasure;i++){
+
+    const dot =
+      document.createElement('div');
+
+    dot.className = 'dot';
+
+    ui.beatDots.appendChild(dot);
+  }
+}
+
+function lightDot(index){
+
+  [...ui.beatDots.children]
+    .forEach(dot => {
+      dot.className = 'dot';
+    });
+
+  const dot =
+    ui.beatDots.children[index];
+
+  if(!dot) return;
+
+  dot.classList.add(
+    index === 0
+      ? 'active-1'
+      : 'active-other'
+  );
+}
+
+function tick(){
+
+  const accent =
+    state.currentBeat === 0;
+
+  playBeat(accent);
+
+  lightDot(state.currentBeat);
+
+  state.currentBeat =
+    (state.currentBeat + 1)
+    % state.beatsPerMeasure;
+
+  handleRamp();
+}
+
+function startPlayback(){
+
+  if(state.playing) return;
+
+  state.playing = true;
+
+  ui.playBtn.classList.add('playing');
+
+  ui.playIcon.className =
+    'ti ti-player-pause';
+
+  tick();
+
+  state.interval = setInterval(
+    tick,
+    60000 / state.bpm
+  );
+}
+
+function stopPlayback(){
+
+  state.playing = false;
+
+  clearInterval(state.interval);
+
+  ui.playBtn.classList.remove(
+    'playing'
+  );
+
+  ui.playIcon.className =
+    'ti ti-player-play';
+
+  [...ui.beatDots.children]
+    .forEach(dot => {
+      dot.className = 'dot';
+    });
+}
+
+function restartPlayback(){
+
+  if(!state.playing) return;
+
+  clearInterval(state.interval);
+
+  state.interval = setInterval(
+    tick,
+    60000 / state.bpm
+  );
+}
+
+function setBpm(v){
+
+  state.bpm =
+    Math.max(
+      20,
+      Math.min(
+        300,
+        Math.round(v)
+      )
+    );
+
+  ui.bpm.textContent =
+    state.bpm;
+
+  ui.bpm.classList.add('bump');
+
+  setTimeout(() => {
+    ui.bpm.classList.remove('bump');
+  },100);
+
+  restartPlayback();
+}
+
+function handleRamp(){
+
+  if(
+    !state.ramp.active ||
+    state.currentBeat !== 0
+  ){
+    return;
+  }
+
+  state.ramp.repeats++;
+
+  const start =
+    parseInt($('r-start').value);
+
+  const end =
+    parseInt($('r-end').value);
+
+  const reps =
+    parseInt($('r-reps').value);
+
+  const step =
+    parseInt($('r-step').value);
+
+  if(state.ramp.repeats >= reps){
+
+    state.ramp.repeats = 0;
+
+    state.ramp.bpm += step;
+
+    if(state.ramp.bpm > end){
+
+      stopRamp();
+      return;
+    }
+
+    setBpm(state.ramp.bpm);
+
+    ui.rampStatus.textContent =
+      `Step: ${state.ramp.bpm} bpm → ${end} bpm`;
+  }
+}
+
+function startRamp(){
+
+  const start =
+    parseInt($('r-start').value);
+
+  const end =
+    parseInt($('r-end').value);
+
+  if(start >= end){
+    ui.rampStatus.textContent =
+      'Invalid BPM range.';
+    return;
+  }
+
+  state.ramp.active = true;
+  state.ramp.bpm = start;
+  state.ramp.repeats = 0;
+
+  setBpm(start);
+
+  ui.rampBtn.classList.add(
+    'active-ramp'
+  );
+
+  ui.rampBtn.textContent =
+    'Stop ramp';
+
+  ui.rampStatus.textContent =
+    `Step: ${start} bpm → ${end} bpm`;
+
+  startPlayback();
+}
+
+function stopRamp(){
+
+  state.ramp.active = false;
+
+  ui.rampBtn.classList.remove(
+    'active-ramp'
+  );
+
+  ui.rampBtn.textContent =
+    'Start ramp';
+
+  ui.rampStatus.textContent =
+    `✓ Ramp complete at ${state.bpm} bpm`;
+
+  stopPlayback();
+}
+
+function buildPreview(){
+
+  const start =
+    parseInt($('r-start').value);
+
+  const end =
+    parseInt($('r-end').value);
+
+  const reps =
+    parseInt($('r-reps').value);
+
+  const step =
+    parseInt($('r-step').value);
+
+  const steps =
+    Math.ceil(
+      (end - start) / step
+    ) + 1;
+
+  ui.rampPreview.innerHTML = `
+    Start at <b>${start}</b> bpm →
+    repeat ${reps} measures →
+    +${step} bpm →
+    reach <b>${end}</b> bpm
+    <br>
+    ${steps} total steps
+  `;
+}
+
+function countdown(seconds,done){
+
+  let remain = seconds;
+
+  ui.cdOverlay.classList.add(
+    'visible'
+  );
+
+  ui.cdNumber.textContent =
+    remain;
+
+  const int = setInterval(() => {
+
+    remain--;
+
+    if(remain <= 0){
+
+      clearInterval(int);
+
+      ui.cdOverlay.classList.remove(
+        'visible'
+      );
+
+      done();
+      return;
+    }
+
+    ui.cdNumber.textContent =
+      remain;
+
+  },1000);
+
+  ui.cdCancel.onclick = () => {
+
+    clearInterval(int);
+
+    ui.cdOverlay.classList.remove(
+      'visible'
+    );
+  };
+}
+
+/* EVENTS */
+
+ui.playBtn.onclick = () => {
+
+  if(state.playing){
+
+    stopPlayback();
+
+  }else{
+
+    startPlayback();
+  }
+};
+
+ui.toggleRamp.onclick = () => {
+
+  ui.rampBody.classList.toggle(
+    'open'
+  );
+
+  ui.toggleRamp.textContent =
+    ui.rampBody.classList.contains('open')
+      ? 'Hide ▴'
+      : 'Configure ▾';
+};
+
+ui.cdToggle.onclick = () => {
+
+  state.countdown =
+    !state.countdown;
+
+  ui.cdToggle.classList.toggle(
+    'on',
+    state.countdown
+  );
+
+  ui.cdSecs.disabled =
+    !state.countdown;
+};
+
+ui.rampBtn.onclick = () => {
+
+  if(state.ramp.active){
+
+    stopRamp();
+    return;
+  }
+
+  if(state.countdown){
+
+    countdown(
+      parseInt(ui.cdSecs.value) || 5,
+      startRamp
+    );
+
+  }else{
+
+    startRamp();
+  }
+};
+
+document
+  .querySelectorAll('.jump-btn')
+  .forEach(btn => {
+
+    btn.onclick = () => {
+
+      setBpm(
+        state.bpm +
+        parseInt(btn.dataset.delta)
+      );
+    };
+  });
+
+document
+  .querySelectorAll('.sig-btn')
+  .forEach(btn => {
+
+    btn.onclick = () => {
+
+      document
+        .querySelectorAll('.sig-btn')
+        .forEach(b => {
+          b.classList.remove('active');
+        });
+
+      btn.classList.add('active');
+
+      state.beatsPerMeasure =
+        parseInt(btn.dataset.beats);
+
+      buildDots();
+
+      restartPlayback();
+    };
+  });
+
+[
+  $('r-start'),
+  $('r-end'),
+  $('r-reps'),
+  $('r-step')
+].forEach(el => {
+  el.oninput = buildPreview;
+});
+
+ui.themeBtn.onclick = () => {
+
+  document.body.classList.toggle(
+    'dark'
+  );
+
+  ui.themeBtn.innerHTML =
+    document.body.classList.contains('dark')
+      ? '<i class="ti ti-sun"></i>'
+      : '<i class="ti ti-moon"></i>';
+};
+
+const wheel = $('scroll-wheel');
+
+wheel.addEventListener(
+  'wheel',
+  e => {
+
+    e.preventDefault();
+
+    setBpm(
+      state.bpm +
+      (e.deltaY > 0 ? -1 : 1)
+    );
+  },
+  {passive:false}
+);
+
+let dragY = null;
+let startBpm = null;
+
+wheel.addEventListener(
+  'pointerdown',
+  e => {
+
+    dragY = e.clientY;
+    startBpm = state.bpm;
+
+    wheel.setPointerCapture(
+      e.pointerId
+    );
+  }
+);
+
+wheel.addEventListener(
+  'pointermove',
+  e => {
+
+    if(dragY === null) return;
+
+    const delta =
+      (dragY - e.clientY) * 0.5;
+
+    setBpm(startBpm + delta);
+  }
+);
+
+wheel.addEventListener(
+  'pointerup',
+  () => {
+    dragY = null;
+  }
+);
+
+buildDots();
+buildPreview();
+
+})();
+
+</script>
+
+</body>
+</html>
